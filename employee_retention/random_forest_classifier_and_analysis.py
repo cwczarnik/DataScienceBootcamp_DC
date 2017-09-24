@@ -8,7 +8,7 @@ def rfc_model_analysis(model,X,Y):
     # Model Must be a Random Forest Classifier
     X_train,X_test,y_train,y_test = train_test_split(X,Y)
     model.fit(X_train,y_train)
-    predict = model.predict_proba(X_test)[:,0]
+    predict = model.predict_proba(X_test)[:,1]
     
     prec, rec, thresh1 = precision_recall_curve(y_test,predict)
     fpr,tpr, thresh2 = roc_curve(y_test,predict)
@@ -55,9 +55,9 @@ def rfc_model_analysis(model,X,Y):
     ax.set_yticks(ind + .3);
     ax.set_yticklabels((X_test.columns[sort_index]))
     plt.title('Feature Importance')
+    plt.show()
 
     print("At threshold = 0.5")
     print metrics.classification_report(y_test,predict>0.5)
     print 'accuracy: ',metrics.accuracy_score(y_test,predict>0.5)
-    
     return(model)
